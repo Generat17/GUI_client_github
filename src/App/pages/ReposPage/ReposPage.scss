@@ -1,0 +1,55 @@
+@import "./src/styles/veriables";
+
+.repos-page {
+    width: 357px;
+    font-size: 24px;
+
+    &__name {
+        font-size: 44px;
+        border-bottom: black 1px solid;
+        margin-bottom: 20px;
+    }
+
+    &__description {
+        border-bottom: black 1px solid;
+        margin-bottom: 20px;
+    }
+
+    &__language {
+        border-bottom: black 1px solid;
+        margin-bottom: 20px;
+    }
+
+    &__github-link {
+        border-bottom: black 1px solid;
+        margin-bottom: 20px;
+
+        & a {
+            text-decoration: none;
+            color: black;
+
+            &:hover {
+                text-decoration: none;
+                color: $dark-grey-color;
+            }
+        }
+    }
+
+    &__button {
+        padding: 5px 15px;
+        background: darkgrey;
+        text-decoration: none;
+        color: black;
+        border-radius: 10px;
+
+        &:hover {
+            opacity: 0.9;
+            border: black 1px solid;
+        }
+    }
+
+    &__error {
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+}
