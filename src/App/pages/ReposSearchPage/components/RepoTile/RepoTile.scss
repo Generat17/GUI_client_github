@@ -1,0 +1,87 @@
+@import "./src/styles/veriables";
+
+.card {
+    background: $white-color;
+    width: 100%;
+    margin: 10px 0;
+    border: 1px solid $grey-color;
+    border-radius: 6px;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+
+    &:hover {
+        cursor: pointer;
+        box-shadow: 0px 2px 6px rgba(182, 182, 182, 0.25);
+    }
+
+    &__content {
+        width: 241px;
+    }
+
+    &__user-name {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 19px;
+        color: $black-color;
+        margin-top: 23px;
+        width: 230px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow:ellipsis;
+    }
+
+    &__company-name {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 16px;
+        color: $dark-grey-color;
+        margin-top: 4px;
+    }
+
+    &__company-name a {
+        text-decoration: none;
+        color: $dark-grey-color;
+    }
+
+    &__company-name a:hover {
+        text-decoration: none;
+        color: $sky-blue-color;
+        cursor: pointer;
+    }
+
+    &__buttom-line {
+        display: flex;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 16px;
+        color: $dark-grey-color;
+        margin-top: 4px;
+    }
+
+    &__date-update {
+        margin-left: 20px;
+    }
+
+    &__buttom-line img {
+        width: 12.96px;
+        height: 12.39px;
+    }
+
+    &__user-name__link {
+        text-decoration: none;
+        color: $black-color;
+    }
+
+    &__user-name__link:hover {
+        text-decoration: none;
+        color: $sky-blue-color;
+        cursor: pointer;
+    }
+}

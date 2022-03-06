@@ -1,0 +1,22 @@
+@import "./src/styles/veriables";
+
+.button {
+    background: $peach-color;
+    border-radius: 6px;
+    border: none;
+
+    width: 50px;
+    flex-shrink: 0;
+
+    position: relative;
+
+    &:hover {
+        opacity: 70%;
+        cursor: pointer;
+    }
+
+    &:disabled {
+        background: $grey-color;
+        cursor: pointer;
+    }
+}

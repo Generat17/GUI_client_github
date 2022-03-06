@@ -1,0 +1,37 @@
+@import "./src/styles/veriables";
+
+.card__avatar {
+    background: $peach-color;
+    border-radius: 50px;
+    width: 80px;
+    height: 80px;
+    margin: 12px;
+    position: relative;
+
+    &__img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50px;
+        position: absolute;
+    }
+
+    &__img-background {
+        background: $white-color;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.card__text-avatar {
+    margin-top: 15px;
+    text-align: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 47px;
+    color: $white-color;
+    position: absolute;
+    left: 25px;
+    top: 1px;
+}
