@@ -1,6 +1,8 @@
-$loader-height:100px !default;
-$loader-width:100px !default;
-$loader-color:#FFF !default;
+@import "./src/styles/veriables";
+
+$loader-height:200px !default;
+$loader-width:200px !default;
+$loader-color:$peach-color !default;
 $loader-duration:2.0s ;
 
 @keyframes rotate {
