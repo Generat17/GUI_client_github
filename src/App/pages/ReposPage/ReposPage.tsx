@@ -1,57 +1,43 @@
 import './ReposPage.scss';
 
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 
-import {ApiResponse} from "@shared/store/ApiStore/types";
+import NotFound from "@components/NotFound";
+import Preloader from "@components/Preloader";
 import GitHubStore from '@store/GitHubStore';
-import {RepositoryDetail} from "@store/GitHubStore/types";
+import {Meta} from "@utils/meta";
+import {observer} from "mobx-react-lite";
 import {useParams} from "react-router-dom";
 
 const gitHubStore = new GitHubStore();
 
 const ReposPage = () => {
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [reposDetail, setRepoDetail] = useState<RepositoryDetail>();
     const {id} = useParams();
 
     useEffect(() => {
-        setIsLoading(true);
-        if (id != undefined) {
+        if (id !== undefined) {
             gitHubStore.getRepository({
-                id: id
-            }).then((result: ApiResponse<RepositoryDetail, any>) => {
-                if (result.success) {
-                    setRepoDetail(result.data);
-                } else {
-                    /* временное решение */
-                    // eslint-disable-next-line no-console
-                    console.log(result.status);
-                }
-            })
+                id: id,
+            });
         }
-        setIsLoading(false);
-    });
+    }, [id]);
 
-    if (reposDetail != undefined) {
-        return (
-            <div className="repos-page">
-                <div className="repos-page__name">{reposDetail.name}</div>
-                <div className="repos-page__description">Описание: {reposDetail.description}</div>
-                <div className="repos-page__language">Основной язык: {reposDetail.language}</div>
-                <div className="repos-page__github-link"><a href={reposDetail.html_url}>Ссылка на github репозитория</a></div>
-                <a href="./" className="repos-page__button">Назад</a>
+
+    return (
+        <div className="repos-page">
+            {gitHubStore.meta === Meta.loading && <Preloader/>}
+            {gitHubStore.meta === Meta.error && <NotFound/>}
+            <div className="repos-page__name">{gitHubStore.repoDetail.name}</div>
+            <div className="repos-page__description">Описание: {gitHubStore.repoDetail.description}</div>
+            <div className="repos-page__language">Основной язык: {gitHubStore.repoDetail.language}</div>
+            <div className="repos-page__github-link">
+                <a href={gitHubStore.repoDetail.htmlUrl}>Ссылка на github репозитория</a>
             </div>
-        );
-    } else {
-        return (
-            <div className="reposPage">
-                <div className="repos-page__error">Ошибка. Страница не найдена.</div>
-                <a href="./" className="repos-page__button">Назад</a>
-            </div>
-        );
-    }
+            <a href="./" className="repos-page__button">Назад</a>
+        </div>
+    );
 
 };
 
-export default ReposPage;
+export default observer(ReposPage);
