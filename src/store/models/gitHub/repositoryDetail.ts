@@ -1,5 +1,3 @@
-import {GitHubRepoOwnerApi, GitHubRepoOwnerModel, normalizeGitHubRepoOwner} from "./gitHubRepoOwner";
-
 export type RepositoryDetailApi = {
     id: number;
     name: string;
@@ -8,7 +6,6 @@ export type RepositoryDetailApi = {
     private: boolean;
     language: string;
     stargazers_count: number;
-    owner: GitHubRepoOwnerApi;
 };
 
 export type RepositoryDetailModel = {
@@ -19,10 +16,9 @@ export type RepositoryDetailModel = {
     private: boolean;
     language: string;
     stargazersCount: number;
-    owner: GitHubRepoOwnerModel;
 };
 
-export const getInitialRepoDetail = ():RepositoryDetailModel => ({
+export const getInitialRepoDetail = (): RepositoryDetailModel => ({
     id: 0,
     name: '',
     description: '',
@@ -30,12 +26,6 @@ export const getInitialRepoDetail = ():RepositoryDetailModel => ({
     private: false,
     language: '',
     stargazersCount: 0,
-    owner: {
-        id: 0,
-        url: '',
-        avatarUrl: '',
-        login: '',
-    }
 });
 
 export const normalizeRepositoryDetail = (from: RepositoryDetailApi): RepositoryDetailModel => ({
@@ -45,6 +35,5 @@ export const normalizeRepositoryDetail = (from: RepositoryDetailApi): Repository
     htmlUrl: from.html_url,
     private: from.private,
     language: from.language,
-    stargazersCount: from.stargazers_count,
-    owner: normalizeGitHubRepoOwner(from.owner),
+    stargazersCount: from.stargazers_count
 });

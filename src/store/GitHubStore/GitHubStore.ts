@@ -1,7 +1,8 @@
 import ApiStore from '@shared/store/ApiStore';
 import {HTTPMethod} from '@shared/store/ApiStore/types';
 import {
-    getInitialRepoDetail,
+    getInitialGitHubRepoOwner,
+    getInitialRepoDetail, GitHubRepoOwnerApi, GitHubRepoOwnerModel, normalizeGitHubRepoOwner,
     normalizeRepoItem,
     normalizeRepositoryDetail,
     RepoItemApi,
@@ -20,13 +21,13 @@ import {action, computed, makeObservable, observable, runInAction} from "mobx";
 
 import {
     GetOrganizationReposListParams,
-    GetRepositoryListParams,
+    GetRepositoryListParams, GetReposOwnerParams,
     IGitHubStore
 } from "./types";
 
 const BASE_URL = 'https://api.github.com';
 
-type PrivateFields = "_list" | "_meta" | "_repoDetail";
+type PrivateFields = "_list" | "_meta" | "_repoDetail" | "_owner";
 
 export default class GitHubStore implements IGitHubStore, ILocalStore {
     private readonly apiStore = new ApiStore(BASE_URL);
@@ -34,17 +35,21 @@ export default class GitHubStore implements IGitHubStore, ILocalStore {
     private _list: CollectionModel<number, RepoItemModel> = getInitialCollectionModel();
     private _meta: Meta = Meta.initial;
     private _repoDetail: RepositoryDetailModel = getInitialRepoDetail();
+    private _owner: GitHubRepoOwnerModel = getInitialGitHubRepoOwner();
 
     constructor() {
         makeObservable<GitHubStore, PrivateFields>(this, {
             _list: observable.ref,
             _meta: observable,
             _repoDetail: observable,
+            _owner: observable,
             list: computed,
             meta: computed,
             repoDetail: computed,
+            owner: computed,
             getOrganizationReposList: action,
-            getRepository: action
+            getRepository: action,
+            getReposOwner: action,
         });
 
     }
@@ -61,6 +66,10 @@ export default class GitHubStore implements IGitHubStore, ILocalStore {
         return this._meta;
     }
 
+    get owner(): GitHubRepoOwnerModel {
+        return this._owner;
+    }
+
     async getOrganizationReposList(params: GetOrganizationReposListParams): Promise<void> {
         this._meta = Meta.loading;
         this._list = getInitialCollectionModel();
@@ -69,7 +78,7 @@ export default class GitHubStore implements IGitHubStore, ILocalStore {
             method: HTTPMethod.GET,
             data: {},
             headers: {},
-            endpoint: `/orgs/${params.organizationName}/repos`
+            endpoint: `/${params.userType}/${params.organizationName}/repos`
         })
 
         runInAction(() => {
@@ -113,6 +122,31 @@ export default class GitHubStore implements IGitHubStore, ILocalStore {
                 } catch (e) {
                     this._meta = Meta.error;
                     this._repoDetail = getInitialRepoDetail();
+                }
+            }
+        })
+    }
+
+    async getReposOwner(params: GetReposOwnerParams): Promise<void> {
+        this._meta = Meta.loading;
+        this._owner = getInitialGitHubRepoOwner();
+
+        const response = await this.apiStore.request<GitHubRepoOwnerApi>({
+            method: HTTPMethod.GET,
+            data: {},
+            headers: {},
+            endpoint: `/users/${params.organizationName}`
+        })
+
+        runInAction(() => {
+            if (response.success) {
+                try {
+                    this._meta = Meta.success;
+                    this._owner = normalizeGitHubRepoOwner(response.data);
+                    return;
+                } catch (e) {
+                    this._meta = Meta.error;
+                    this._owner = getInitialGitHubRepoOwner();
                 }
             }
         })
