@@ -17,6 +17,7 @@
 
     &__content {
         width: 241px;
+        margin: 12px;
     }
 
     &__user-name {
@@ -26,7 +27,6 @@
         font-size: 16px;
         line-height: 19px;
         color: $black-color;
-        margin-top: 23px;
         width: 230px;
         overflow: hidden;
         white-space: nowrap;

@@ -3,7 +3,7 @@ import React, {useState} from "react";
 
 import {GitHubRepoOwnerModel} from "@store/models/gitHub";
 import {Drawer, Divider, Col, Row} from 'antd';
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 import {observer} from "mobx-react-lite";
 
 import Avatar from "./components/Avatar";
