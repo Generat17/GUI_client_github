@@ -4,7 +4,6 @@ import {RepoItemModel} from "@store/models/gitHub";
 import { Link } from 'react-router-dom';
 
 import './RepoTile.scss';
-
 import StarIcon from "./components/StarIcon";
 
 
