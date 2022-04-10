@@ -1,0 +1,12 @@
+@import "./src/styles/veriables";
+
+$loader-height:200px !default;
+$loader-width:200px !default;
+$loader-color:$peach-color !default;
+$loader-duration:2.0s ;
+
+@keyframes rotate {
+	100% {
+		transform: rotate(360deg);
+	}
+}
